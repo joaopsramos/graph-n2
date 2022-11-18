@@ -13,6 +13,9 @@ pub const FILE_PATH: &str = "./graph.json";
 
 #[derive(PartialEq)]
 pub enum MenuOpt {
+    A,
+    B,
+    C,
     No,
     Load,
     Visualize,
@@ -29,10 +32,16 @@ pub fn show_menu() {
 
     println!(
         "\
+{}) Busca em profundidade
+{}) Busca em largura
+{}) Algoritmo de Dijkstra
 ---
 {}) Visualizar grafo
 {}) Exportar grafo como PNG
 {}) Encerrar",
+        "a".magenta().bold(),
+        "b".magenta().bold(),
+        "c".magenta().bold(),
         "v".magenta().bold(),
         "x".magenta().bold(),
         "q".magenta().bold(),
@@ -68,6 +77,9 @@ pub fn read_option() -> MenuOpt {
 
 fn parse_option(option: &str) -> Option<MenuOpt> {
     match option {
+        "a" => Some(A),
+        "b" => Some(B),
+        "c" => Some(C),
         "n" => Some(No),
         "l" => Some(Load),
         "v" => Some(Visualize),
@@ -79,6 +91,9 @@ fn parse_option(option: &str) -> Option<MenuOpt> {
 
 pub fn run_option(option: MenuOpt, graph: &mut Graph) {
     let result = match option {
+        A => depth_first_search(graph),
+        B => breadth_first_search(graph),
+        C => dijkstra(graph),
         Visualize => show_graph(graph),
         Export => export_graph(graph),
         _ => Ok(format!("")),
@@ -88,6 +103,18 @@ pub fn run_option(option: MenuOpt, graph: &mut Graph) {
         Ok(success) => println!("{success}"),
         Err(err) => println!("{err}"),
     }
+}
+
+pub fn depth_first_search(graph: &Graph) -> RunOptResult {
+    Ok("".to_string())
+}
+
+pub fn breadth_first_search(graph: &Graph) -> RunOptResult {
+    Ok("".to_string())
+}
+
+pub fn dijkstra(graph: &Graph) -> RunOptResult {
+    Ok("".to_string())
 }
 
 pub fn load_graph() -> Option<Graph> {
