@@ -26,6 +26,26 @@ impl Feedback {
         )
     }
 
+    pub fn node_not_found() -> String {
+        format!(
+            "{}",
+            "Nenhum vértice foi encontrado com esse código, tente digitar outro...".red()
+        )
+    }
+
+    pub fn invalid_code() -> String {
+        format!("{}", "Por favor, digite um código válido.".red())
+    }
+
+    pub fn nth_node(num: &str) -> String {
+        let msg = format!("* {num} vértice *");
+        format!("{}", msg.blue().bold())
+    }
+
+    pub fn read_code() -> String {
+        format!("{}", "Digite o código:".yellow())
+    }
+
     pub fn load_graph_success() -> String {
         format!("{}", "Grafo carregado com sucesso!".green())
     }
@@ -42,3 +62,4 @@ impl Feedback {
         format!("{}\nVerifique se você possui o programa {executable} ({link}) instalado e se é possivel criar arquivos na pasta atual", "Erro ao exportar grafo".red())
     }
 }
+

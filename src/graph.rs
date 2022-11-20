@@ -18,6 +18,22 @@ pub struct Graph {
     pub nodes: Vec<Node>,
 }
 
+impl Graph {
+    pub fn find_by_code(&self, code: usize) -> Option<&Node> {
+        self.nodes.iter().find(|node| node.code == code)
+    }
+
+    pub fn depth_first_search(&self) -> Vec<Node> {
+        let first_node = self.nodes.first();
+        let mut result: Vec<Node> = Vec::new();
+        let mut queue = vec![first_node];
+
+        while let Some(current_node) = queue.pop() {}
+
+        result
+    }
+}
+
 impl Display for Graph {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut string = "** Grafo **\n".blue().bold().to_string();

@@ -2,6 +2,7 @@ use crate::{
     feedback::Feedback,
     graph::Graph,
     graph_exporter::{self, DOT_OUTPUT},
+    node::Node,
 };
 use colored::Colorize;
 use std::{env, fs, io, path::Path};
@@ -106,7 +107,17 @@ pub fn run_option(option: MenuOpt, graph: &mut Graph) {
 }
 
 pub fn depth_first_search(graph: &Graph) -> RunOptResult {
+    let r = graph.depth_first_search();
+    println!("{r:?}");
     Ok("".to_string())
+
+    // match graph.get_path(node1, node2) {
+    //     Some(path) => {
+    //         println!("{}", Feedback::path_found());
+    //         Ok(get_string_path(path))
+    //     }
+    //     None => return Ok(Feedback::no_path_found(node1.code, node2.code)),
+    // }
 }
 
 pub fn breadth_first_search(graph: &Graph) -> RunOptResult {
@@ -146,4 +157,47 @@ fn export_graph(graph: &Graph) -> RunOptResult {
         }
         Err(_) => Err(Feedback::graph_not_exported()),
     }
+}
+
+fn read_node(graph: &Graph) -> Result<&Node, String> {
+    loop {
+        let code = read_code();
+
+        match graph.find_by_code(code) {
+            Some(node) => break Ok(node),
+            None => {
+                println!("{}\n", Feedback::node_not_found());
+                continue;
+            }
+        }
+    }
+}
+
+fn read_code() -> usize {
+    loop {
+        println!("{}", Feedback::read_code());
+
+        let mut code = String::new();
+
+        io::stdin().read_line(&mut code).unwrap();
+        println!("{}", Feedback::value_read(&code, "Código digitado"));
+
+        match code.trim().parse::<usize>() {
+            Ok(parsed_code) => {
+                break parsed_code;
+            }
+            Err(_) => {
+                println!("{}", Feedback::invalid_code());
+                continue;
+            }
+        };
+    }
+}
+
+fn get_string_path(nodes: Vec<&Node>) -> String {
+    nodes
+        .iter()
+        .map(|x| format!("[{}] {}", x.code.to_string(), x.name))
+        .collect::<Vec<_>>()
+        .join(" <-> ")
 }
