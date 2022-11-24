@@ -128,8 +128,20 @@ pub fn breadth_first_search(graph: &Graph) -> RunOptResult {
     Ok(format!("{bfs_result:?}"))
 }
 
-pub fn dijkstra(_graph: &Graph) -> RunOptResult {
-    Ok("".to_string())
+pub fn dijkstra(graph: &Graph) -> RunOptResult {
+    println!("{}", Feedback::initial_node());
+    let initial_node = read_node(graph)?;
+
+    let result = graph.dijkstra(initial_node);
+    // let nodes = graph.get_by_codes(&bfs_result);
+
+    // Ok(get_string_path(nodes))
+    let mut r = String::new();
+    for (node, distance) in result {
+        r = format!("{r}{node:?}: {distance}\n");
+    }
+
+    Ok(r)
 }
 
 pub fn load_graph() -> Option<Graph> {

@@ -1,7 +1,10 @@
 use crate::node::Node;
 use colored::Colorize;
 use serde::{Deserialize, Serialize};
-use std::{collections::VecDeque, fmt::Display};
+use std::{
+    collections::{BinaryHeap, HashMap, HashSet, VecDeque},
+    fmt::Display,
+};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Edge {
@@ -43,17 +46,23 @@ impl Graph {
             .collect()
     }
 
+    fn adjacency_edges(&self, node: &Node) -> Vec<&Edge> {
+        self.edges
+            .iter()
+            .filter(|edge| edge.from == node.code)
+            .collect()
+    }
+
     pub fn depth_first_search(&self, initial_node: &Node) -> Vec<usize> {
         let mut stack = vec![initial_node];
-        let mut visited = vec![initial_node];
+        let mut visited = HashSet::from([initial_node]);
         let mut history = Vec::new();
 
         while let Some(current_node) = stack.pop() {
             history.push(current_node.code);
 
             for neighbor in self.neighbors(current_node).iter().rev() {
-                if !visited.contains(neighbor) {
-                    visited.push(neighbor);
+                if visited.insert(neighbor) {
                     stack.push(neighbor);
                 }
             }
@@ -64,20 +73,48 @@ impl Graph {
 
     pub fn breadth_first_search(&self, initial_node: &Node) -> Vec<usize> {
         let mut queue = VecDeque::from([initial_node]);
-        let mut visited = vec![initial_node];
+        let mut path = vec![initial_node];
 
         while let Some(current_node) = queue.pop_front() {
-            let neighbors = self.neighbors(current_node);
-
-            for neighbor in neighbors.iter() {
-                if !visited.contains(neighbor) {
-                    visited.push(neighbor);
+            for neighbor in self.neighbors(current_node) {
+                if !path.contains(&neighbor) {
+                    path.push(neighbor);
                     queue.push_back(neighbor);
                 }
             }
         }
 
-        visited.iter().map(|n| n.code).collect()
+        path.iter().map(|n| n.code).collect()
+    }
+
+    pub fn dijkstra<'a>(&'a self, initial_node: &'a Node) -> HashMap<&Node, u32> {
+        let mut distances = HashMap::new();
+        let mut visited = HashSet::new();
+        let mut to_visit = Vec::new();
+
+        distances.insert(initial_node, 0);
+        to_visit.push((initial_node, 0));
+
+        while let Some((current_node, distance)) = to_visit.pop() {
+            if !visited.insert(current_node) {
+                continue;
+            }
+
+            for edge in self.adjacency_edges(current_node) {
+                let neighbor = self.find_by_code(edge.to).unwrap();
+                let new_distance = distance + edge.weight;
+                let is_shorter = distances
+                    .get(neighbor)
+                    .map_or(true, |&current| new_distance < current);
+
+                if is_shorter {
+                    distances.insert(neighbor, new_distance);
+                    to_visit.push((neighbor, new_distance))
+                }
+            }
+        }
+
+        distances
     }
 }
 
