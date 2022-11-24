@@ -3,6 +3,10 @@ use colored::Colorize;
 pub struct Feedback;
 
 impl Feedback {
+    pub fn initial_node() -> String {
+        format!("{}", "**Vértice inicial**".blue().bold())
+    }
+
     pub fn graph_file_not_found() -> String {
         format!(
             "{}",
@@ -37,11 +41,6 @@ impl Feedback {
         format!("{}", "Por favor, digite um código válido.".red())
     }
 
-    pub fn nth_node(num: &str) -> String {
-        let msg = format!("* {num} vértice *");
-        format!("{}", msg.blue().bold())
-    }
-
     pub fn read_code() -> String {
         format!("{}", "Digite o código:".yellow())
     }
@@ -62,4 +61,3 @@ impl Feedback {
         format!("{}\nVerifique se você possui o programa {executable} ({link}) instalado e se é possivel criar arquivos na pasta atual", "Erro ao exportar grafo".red())
     }
 }
-

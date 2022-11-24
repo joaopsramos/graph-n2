@@ -1,9 +1,10 @@
 use crate::node::Node;
 use colored::Colorize;
+use itertools::Itertools;
 use serde::{Deserialize, Serialize};
-use std::fmt::Display;
+use std::{collections::VecDeque, fmt::Display};
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Edge {
     pub from: usize,
     pub to: usize,
@@ -23,42 +24,85 @@ impl Graph {
         self.nodes.iter().find(|node| node.code == code)
     }
 
-    pub fn depth_first_search(&self) -> Vec<Node> {
-        let first_node = self.nodes.first();
-        let mut result: Vec<Node> = Vec::new();
-        let mut queue = vec![first_node];
+    pub fn get_by_codes(&self, codes: Vec<usize>) -> Vec<&Node> {
+        self.nodes
+            .iter()
+            .filter(|node| codes.contains(&node.code))
+            .collect()
+    }
 
-        while let Some(current_node) = queue.pop() {}
+    fn neighbors(&self, node: &Node) -> Vec<&Node> {
+        self.edges
+            .iter()
+            .filter_map(|edge| {
+                if edge.from == node.code {
+                    return Some(self.find_by_code(edge.to).unwrap());
+                }
 
-        result
+                None
+            })
+            .collect()
+    }
+
+    pub fn depth_first_search(&self, initial_node: &Node) -> Vec<usize> {
+        let mut stack = vec![initial_node];
+        let mut history = vec![initial_node];
+        let mut visited = vec![initial_node];
+
+        while let Some(current_node) = stack.pop() {
+            history.push(current_node);
+
+            for neighbor in self.neighbors(current_node).iter().rev() {
+                if !visited.contains(neighbor) {
+                    visited.push(neighbor);
+                    stack.push(neighbor);
+                }
+            }
+        }
+
+        history.iter().unique().map(|n| n.code).collect()
+    }
+
+    pub fn breadth_first_search(&self, initial_node: &Node) -> Vec<usize> {
+        let mut queue = VecDeque::from([initial_node]);
+        let mut visited = vec![initial_node];
+
+        while let Some(current_node) = queue.pop_front() {
+            let neighbors = self.neighbors(current_node);
+
+            for neighbor in neighbors.iter() {
+                if !visited.contains(neighbor) {
+                    visited.push(neighbor);
+                    queue.push_back(neighbor);
+                }
+            }
+        }
+
+        visited.iter().map(|n| n.code).collect()
     }
 }
 
 impl Display for Graph {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let mut string = "** Grafo **\n".blue().bold().to_string();
-        let mut iter = self.nodes.iter().peekable();
+        let iter = self.nodes.iter();
 
-        while let Some(node) = iter.next() {
+        for node in iter {
             string = format!("{string}{node}\n");
-
-            if iter.peek().is_some() {
-                string = format!("{string}");
-            }
         }
 
         if self.edges.is_empty() {
             return write!(f, "{string}");
         }
 
-        string.push_str(&"\n** Arestas **".blue().bold().to_string());
+        string.push_str(&"\n** Arestas **".blue().bold());
         string = format!("{string}\n{}", format_edges(self.is_weighted, &self.edges));
 
         write!(f, "{string}")
     }
 }
 
-fn format_edges(weighted: bool, edges: &Vec<Edge>) -> String {
+fn format_edges(weighted: bool, edges: &[Edge]) -> String {
     let mut string = "".to_string();
     let mut iter = edges.iter().peekable();
 
@@ -73,11 +117,10 @@ fn format_edges(weighted: bool, edges: &Vec<Edge>) -> String {
             string = format!("{string}  Peso = {}", edge.weight.to_string().cyan());
         }
 
-        string = format!("{string}");
         if iter.peek().is_some() {
-            string = format!("{string}\n");
+            string.push('\n');
         }
     }
 
-    format!("{string}")
+    string
 }

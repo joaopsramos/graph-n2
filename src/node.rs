@@ -2,7 +2,7 @@ use colored::*;
 use serde::{Deserialize, Serialize};
 use std::fmt::Display;
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, Hash, Eq)]
 pub struct Node {
     pub code: usize,
     pub name: String,

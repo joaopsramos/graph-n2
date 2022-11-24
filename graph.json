@@ -3,32 +3,42 @@
     "size": 4,
     "nodes": [
         {
-            "code": 1,
+            "code": 0,
             "name": "0",
             "local_type": ""
         },
         {
-            "code": 2,
+            "code": 1,
             "name": "1",
             "local_type": ""
         },
         {
-            "code": 3,
+            "code": 2,
             "name": "2",
             "local_type": ""
         },
         {
-            "code": 4,
+            "code": 3,
             "name": "3",
+            "local_type": ""
+        },
+        {
+            "code": 4,
+            "name": "4",
+            "local_type": ""
+        },
+        {
+            "code": 5,
+            "name": "5",
+            "local_type": ""
+        },
+        {
+            "code": 6,
+            "name": "6",
             "local_type": ""
         }
     ],
     "edges": [
-        {
-            "from": 1,
-            "to": 2,
-            "weight": 5
-        },
         {
             "from": 0,
             "to": 1,
@@ -40,18 +50,23 @@
             "weight": 6
         },
         {
-            "from": 2,
+            "from": 1,
             "to": 3,
+            "weight": 5
+        },
+        {
+            "from": 1,
+            "to": 4,
+            "weight": 5
+        },
+        {
+            "from": 2,
+            "to": 5,
             "weight": 10
         },
         {
             "from": 2,
-            "to": 0,
-            "weight": 5
-        },
-        {
-            "from": 3,
-            "to": 3,
+            "to": 6,
             "weight": 1
         }
     ]

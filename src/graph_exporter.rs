@@ -24,7 +24,7 @@ pub fn export_graph(graph: &Graph) -> Result<(), Box<dyn Error>> {
         f = format!("{f}\n")
     }
 
-    f.push_str("}");
+    f.push('}');
 
     fs::write(DOT_INPUT, f)?;
 

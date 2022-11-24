@@ -5,6 +5,7 @@ use crate::{
     node::Node,
 };
 use colored::Colorize;
+use itertools::Itertools;
 use std::{env, fs, io, path::Path};
 use MenuOpt::*;
 
@@ -12,7 +13,7 @@ type RunOptResult = Result<String, String>;
 
 pub const FILE_PATH: &str = "./graph.json";
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Eq)]
 pub enum MenuOpt {
     A,
     B,
@@ -62,7 +63,7 @@ pub fn read_option() -> MenuOpt {
 
         io::stdin().read_line(&mut option).unwrap();
 
-        match parse_option(&option.trim()) {
+        match parse_option(option.trim()) {
             Some(opt) => {
                 // Clear input
                 print!("{}", Feedback::value_read(&option, "Opção digitada"));
@@ -97,7 +98,7 @@ pub fn run_option(option: MenuOpt, graph: &mut Graph) {
         C => dijkstra(graph),
         Visualize => show_graph(graph),
         Export => export_graph(graph),
-        _ => Ok(format!("")),
+        _ => Ok(String::new()),
     };
 
     match result {
@@ -107,24 +108,26 @@ pub fn run_option(option: MenuOpt, graph: &mut Graph) {
 }
 
 pub fn depth_first_search(graph: &Graph) -> RunOptResult {
-    let r = graph.depth_first_search();
-    println!("{r:?}");
-    Ok("".to_string())
+    println!("{}", Feedback::initial_node());
+    let initial_node = read_node(graph)?;
 
-    // match graph.get_path(node1, node2) {
-    //     Some(path) => {
-    //         println!("{}", Feedback::path_found());
-    //         Ok(get_string_path(path))
-    //     }
-    //     None => return Ok(Feedback::no_path_found(node1.code, node2.code)),
-    // }
+    let dfs_result = graph.depth_first_search(initial_node);
+    let nodes = graph.get_by_codes(dfs_result);
+
+    Ok(get_string_path(nodes))
 }
 
 pub fn breadth_first_search(graph: &Graph) -> RunOptResult {
-    Ok("".to_string())
+    println!("{}", Feedback::initial_node());
+    let initial_node = read_node(graph)?;
+
+    let bfs_result = graph.breadth_first_search(initial_node);
+    let nodes = graph.get_by_codes(bfs_result);
+
+    Ok(get_string_path(nodes))
 }
 
-pub fn dijkstra(graph: &Graph) -> RunOptResult {
+pub fn dijkstra(_graph: &Graph) -> RunOptResult {
     Ok("".to_string())
 }
 
@@ -197,7 +200,7 @@ fn read_code() -> usize {
 fn get_string_path(nodes: Vec<&Node>) -> String {
     nodes
         .iter()
-        .map(|x| format!("[{}] {}", x.code.to_string(), x.name))
-        .collect::<Vec<_>>()
+        .map(|x| format!("[{}] {}", x.code, x.name))
+        .collect_vec()
         .join(" <-> ")
 }

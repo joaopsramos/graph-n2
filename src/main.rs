@@ -25,7 +25,7 @@ fn main() {
             break;
         }
 
-        print!("\n");
+        println!();
 
         menu::run_option(option, &mut graph);
     }
