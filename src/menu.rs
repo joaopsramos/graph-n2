@@ -5,7 +5,6 @@ use crate::{
     node::Node,
 };
 use colored::Colorize;
-use itertools::Itertools;
 use std::{env, fs, io, path::Path};
 use MenuOpt::*;
 
@@ -112,9 +111,10 @@ pub fn depth_first_search(graph: &Graph) -> RunOptResult {
     let initial_node = read_node(graph)?;
 
     let dfs_result = graph.depth_first_search(initial_node);
-    let nodes = graph.get_by_codes(dfs_result);
+    // let nodes = graph.get_by_codes(&dfs_result);
 
-    Ok(get_string_path(nodes))
+    // Ok(get_string_path(nodes))
+    Ok(format!("{dfs_result:?}"))
 }
 
 pub fn breadth_first_search(graph: &Graph) -> RunOptResult {
@@ -122,9 +122,10 @@ pub fn breadth_first_search(graph: &Graph) -> RunOptResult {
     let initial_node = read_node(graph)?;
 
     let bfs_result = graph.breadth_first_search(initial_node);
-    let nodes = graph.get_by_codes(bfs_result);
+    // let nodes = graph.get_by_codes(&bfs_result);
 
-    Ok(get_string_path(nodes))
+    // Ok(get_string_path(nodes))
+    Ok(format!("{bfs_result:?}"))
 }
 
 pub fn dijkstra(_graph: &Graph) -> RunOptResult {
@@ -201,6 +202,6 @@ fn get_string_path(nodes: Vec<&Node>) -> String {
     nodes
         .iter()
         .map(|x| format!("[{}] {}", x.code, x.name))
-        .collect_vec()
+        .collect::<Vec<_>>()
         .join(" <-> ")
 }

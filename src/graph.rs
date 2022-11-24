@@ -1,6 +1,5 @@
 use crate::node::Node;
 use colored::Colorize;
-use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 use std::{collections::VecDeque, fmt::Display};
 
@@ -24,7 +23,7 @@ impl Graph {
         self.nodes.iter().find(|node| node.code == code)
     }
 
-    pub fn get_by_codes(&self, codes: Vec<usize>) -> Vec<&Node> {
+    pub fn get_by_codes(&self, codes: &[usize]) -> Vec<&Node> {
         self.nodes
             .iter()
             .filter(|node| codes.contains(&node.code))
@@ -46,11 +45,11 @@ impl Graph {
 
     pub fn depth_first_search(&self, initial_node: &Node) -> Vec<usize> {
         let mut stack = vec![initial_node];
-        let mut history = vec![initial_node];
         let mut visited = vec![initial_node];
+        let mut history = Vec::new();
 
         while let Some(current_node) = stack.pop() {
-            history.push(current_node);
+            history.push(current_node.code);
 
             for neighbor in self.neighbors(current_node).iter().rev() {
                 if !visited.contains(neighbor) {
@@ -60,7 +59,7 @@ impl Graph {
             }
         }
 
-        history.iter().unique().map(|n| n.code).collect()
+        history
     }
 
     pub fn breadth_first_search(&self, initial_node: &Node) -> Vec<usize> {
