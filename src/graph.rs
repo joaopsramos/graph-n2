@@ -2,7 +2,7 @@ use crate::node::Node;
 use colored::Colorize;
 use serde::{Deserialize, Serialize};
 use std::{
-    collections::{BinaryHeap, HashMap, HashSet, VecDeque},
+    collections::{HashMap, HashSet, VecDeque},
     fmt::Display,
 };
 
@@ -24,13 +24,6 @@ pub struct Graph {
 impl Graph {
     pub fn find_by_code(&self, code: usize) -> Option<&Node> {
         self.nodes.iter().find(|node| node.code == code)
-    }
-
-    pub fn get_by_codes(&self, codes: &[usize]) -> Vec<&Node> {
-        self.nodes
-            .iter()
-            .filter(|node| codes.contains(&node.code))
-            .collect()
     }
 
     fn neighbors(&self, node: &Node) -> Vec<&Node> {

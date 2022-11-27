@@ -111,9 +111,7 @@ pub fn depth_first_search(graph: &Graph) -> RunOptResult {
     let initial_node = read_node(graph)?;
 
     let dfs_result = graph.depth_first_search(initial_node);
-    // let nodes = graph.get_by_codes(&dfs_result);
 
-    // Ok(get_string_path(nodes))
     Ok(format!("{dfs_result:?}"))
 }
 
@@ -122,9 +120,7 @@ pub fn breadth_first_search(graph: &Graph) -> RunOptResult {
     let initial_node = read_node(graph)?;
 
     let bfs_result = graph.breadth_first_search(initial_node);
-    // let nodes = graph.get_by_codes(&bfs_result);
 
-    // Ok(get_string_path(nodes))
     Ok(format!("{bfs_result:?}"))
 }
 
@@ -132,16 +128,17 @@ pub fn dijkstra(graph: &Graph) -> RunOptResult {
     println!("{}", Feedback::initial_node());
     let initial_node = read_node(graph)?;
 
-    let result = graph.dijkstra(initial_node);
-    // let nodes = graph.get_by_codes(&bfs_result);
+    let mut output = "Dijkstra\n".cyan().to_string();
 
-    // Ok(get_string_path(nodes))
-    let mut r = String::new();
-    for (node, distance) in result {
-        r = format!("{r}{node:?}: {distance}\n");
+    for (node, distance) in graph.dijkstra(initial_node) {
+        output = format!(
+            "{output}{initial_node} -> {node}: {distance}\n",
+            initial_node = initial_node.code,
+            node = node.code
+        );
     }
 
-    Ok(r)
+    Ok(output)
 }
 
 pub fn load_graph() -> Option<Graph> {
@@ -208,12 +205,4 @@ fn read_code() -> usize {
             }
         };
     }
-}
-
-fn get_string_path(nodes: Vec<&Node>) -> String {
-    nodes
-        .iter()
-        .map(|x| format!("[{}] {}", x.code, x.name))
-        .collect::<Vec<_>>()
-        .join(" <-> ")
 }
