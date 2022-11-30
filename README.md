@@ -1,6 +1,7 @@
 # Relatório técnico
 
-## Conteudo
+## Conteúdo
+ - Implementação da busca de profundidade, busca em largura e algoritmo de dijkstra
  - Explicação da forma de funcionamento
  - Pseudocódigo
  - Trecho de código implementado
@@ -16,7 +17,7 @@ paste your pseudocodigo here
 ```
 
 ### Trecho do código implementado
-![Snippet](/img/breadth_first_search.png)
+![Snippet](/img/depth_first_search.png)
 
 ## Busca em largura
 
@@ -29,7 +30,7 @@ paste your pseudocodigo here
 ```
 
 ### Trecho do código implementado
-![Snippet](/img/depth_first_search.png)
+![Snippet](/img/breadth_first_search.png)
 
 ## Algoritmo de dijkstra
 
