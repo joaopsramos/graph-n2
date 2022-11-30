@@ -56,3 +56,27 @@ paste your pseudocodigo here
 
 ### Trecho do código implementado
 ![Snippet](/img/dijkstra.png)
+
+## Comparação dos algoritmos de Dijkstra, Floyd e Bellman-Ford
+
+### Dijkstra
+Dado um vértice inicial, o algoritmo de Dijkstra encontra o menor caminho entre **todos** os vértices do grafo, desde que exista um caminho entre eles. Funciona com grafos e dígrafos, sendo eles ponderados ou não. Não funciona com arestas negativas.
+
+### Bellman-Ford
+É bem similar ao algoritmo de Dijkstra. Necessita de um vértice inicial e **deve** ser direcionado e pondarado. As arestas podem conter valores negativos.
+
+### Floyd
+Já o algoritmo de Floyd funciona de forma diferente dos demais, não precisamos definir um ponto de origem e nos mostra vários caminhos entre os vértices. O algoritmo de Floyd calcula o peso entre **todos** os pares de vértices do grafo. Aceita grafos direcionados ou não e assim como o de Bellman-Ford, aceita valores negativos nas arestas.
+
+### Tabela comparativa
+
+|                   | Dijkstra | Bellman-Ford | Floyd |
+|-------------------|:--------:|:------------:|:-----:|
+| Arestas negativas |     ✖️    |       ✔️      |   ✔️   |
+| Vértice Inicial   |     ✔️    |       ✔️      |   ✖️   |
+| Grafos            |     ✔️    |       ✔️      |   ✔️   |
+| Dígrafos          |     ✔️    |       ✔️      |   ✔️   |
+| Direcionado       |     ✔️    |       ✔️      |   ✔️   |
+| Não Direcionado   |     ✔️    |       ✖️      |   ✔️   |
+| Ponderado         |     ✔️    |       ✔️      |   ✔️   |
+| Não Ponderado     |     ✔️    |       ✖️      |   ✖️   |
