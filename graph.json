@@ -1,41 +1,33 @@
 {
     "is_weighted": true,
-    "size": 4,
     "nodes": [
         {
             "code": 0,
-            "name": "0",
-            "local_type": ""
+            "name": "0"
         },
         {
             "code": 1,
-            "name": "1",
-            "local_type": ""
+            "name": "1"
         },
         {
             "code": 2,
-            "name": "2",
-            "local_type": ""
+            "name": "2"
         },
         {
             "code": 3,
-            "name": "3",
-            "local_type": ""
+            "name": "3"
         },
         {
             "code": 4,
-            "name": "4",
-            "local_type": ""
+            "name": "4"
         },
         {
             "code": 5,
-            "name": "5",
-            "local_type": ""
+            "name": "5"
         },
         {
             "code": 6,
-            "name": "6",
-            "local_type": ""
+            "name": "6"
         }
     ],
     "edges": [

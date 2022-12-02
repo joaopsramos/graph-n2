@@ -6,18 +6,16 @@ use std::fmt::Display;
 pub struct Node {
     pub code: usize,
     pub name: String,
-    pub local_type: String,
 }
 
 impl Display for Node {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "{}Código: {}, Nome: {}, Tipo do local: {}{}",
+            "{}Código: {}, Nome: {}{}",
             "|".green(),
             self.code.to_string().cyan(),
             self.name.cyan(),
-            self.local_type.cyan(),
             "|".green()
         )
     }

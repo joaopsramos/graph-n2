@@ -1,10 +1,30 @@
 # Relatório técnico
 
 ## Conteúdo
+ - Descrição dos campos do Tipo Abstrato de Dado (TAD) proposto;
  - Implementação da busca de profundidade, busca em largura e algoritmo de dijkstra
  - Explicação da forma de funcionamento
  - Pseudocódigo
  - Trecho de código implementado
+
+## Descrição TAD
+
+![TAD](/img/tad.png)
+
+A estrutura `Node` representa um vértice
+ - `code`: código do vértice.
+ - `name`: nome do vértice.
+
+A estrutura `Edge` representa uma aresta
+ - `from`: código do vértice que essa aresta parte.
+ - `to`: código do vértice destino.
+ - `weight`: peso dessa aresta.
+
+A estrutura `Graph` representa o grafo
+ - `is_weighted`: representa se esse grafo é ponderado ou não.
+ - `edges`: lista de arestas pertencentes desse grafo.
+ - `nodes`: lista de vértices pertencentes desse grafo.
+
 
 ## Busca em profundidade
 

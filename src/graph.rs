@@ -16,7 +16,6 @@ pub struct Edge {
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Graph {
     pub is_weighted: bool,
-    pub size: usize,
     pub edges: Vec<Edge>,
     pub nodes: Vec<Node>,
 }
