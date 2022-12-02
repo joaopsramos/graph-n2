@@ -33,15 +33,26 @@ impl Graph {
                     return Some(self.find_by_code(edge.to).unwrap());
                 }
 
+                if edge.to == node.code {
+                    return Some(self.find_by_code(edge.from).unwrap());
+                }
+
                 None
             })
             .collect()
     }
 
-    fn adjacency_edges(&self, node: &Node) -> Vec<&Edge> {
+    fn adjacency_edges(&self, node: &Node) -> Vec<(&Edge, &Node)> {
         self.edges
             .iter()
-            .filter(|edge| edge.from == node.code)
+            .filter_map(|edge| {
+                if edge.from == node.code {
+                    return Some((edge, self.find_by_code(edge.to).unwrap()));
+                } else if edge.to == node.code {
+                    return Some((edge, self.find_by_code(edge.from).unwrap()));
+                }
+                None
+            })
             .collect()
     }
 
@@ -92,8 +103,7 @@ impl Graph {
                 continue;
             }
 
-            for edge in self.adjacency_edges(current_node) {
-                let neighbor = self.find_by_code(edge.to).unwrap();
+            for (edge, neighbor) in self.adjacency_edges(current_node) {
                 let new_distance = distance + edge.weight;
                 let is_shorter = distances
                     .get(neighbor)

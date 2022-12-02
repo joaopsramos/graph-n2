@@ -66,22 +66,22 @@
         {
             "from": 1,
             "to": 2,
-            "weight": 1
+            "weight": 2
         },
         {
             "from": 1,
             "to": 3,
-            "weight": 1
+            "weight": 3
         },
         {
             "from": 2,
             "to": 4,
-            "weight": 1
+            "weight": 2
         },
         {
             "from": 2,
             "to": 5,
-            "weight": 1
+            "weight": 4
         },
         {
             "from": 4,
@@ -91,32 +91,32 @@
         {
             "from": 4,
             "to": 9,
-            "weight": 1
+            "weight": 5
         },
         {
             "from": 5,
             "to": 10,
-            "weight": 1
+            "weight": 2
         },
         {
             "from": 5,
             "to": 11,
-            "weight": 1
+            "weight": 3
         },
         {
             "from": 3,
             "to": 6,
-            "weight": 1
+            "weight": 6
         },
         {
             "from": 3,
             "to": 7,
-            "weight": 1
+            "weight": 2
         },
         {
             "from": 6,
             "to": 12,
-            "weight": 1
+            "weight": 3
         },
         {
             "from": 6,
@@ -126,12 +126,12 @@
         {
             "from": 7,
             "to": 14,
-            "weight": 1
+            "weight": 3
         },
         {
             "from": 7,
             "to": 15,
-            "weight": 1
+            "weight": 2
         }
     ]
 }
