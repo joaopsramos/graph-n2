@@ -10,7 +10,7 @@
 
 ### Explicação da forma de funcionamento
 
-Dado um vértice inicial, o algoritmo busca os vértices adjacentes e cada vizinho, e caso ainda não tenha sido visitado, é colocado em uma pilha e marcado como visitado. Após isso, a mesma coisa acontece para o primeiro item da pilha. O processo se repete até que todos os vértices sejam visitados, consequentemente deixando a pilha vázia. 
+Dado um vértice inicial, o algoritmo busca os vértices adjacentes e cada vizinho, e caso ainda não tenha sido visitado, é colocado em uma pilha e marcado como visitado. Após isso, a mesma coisa acontece para o último item adicionado na pilha e assim por diante. O processo se repete até que todos os vértices sejam visitados, consequentemente deixando a pilha vazia. 
 
 ### Pseudocódigo
 ```
@@ -19,11 +19,12 @@ adicione o nó inicial no histórico de itens visitados
 adicione o nó inicial na pilha
 
 enquanto houver item na pilha:
+    pegue o último item adicionado na pilha
     adicione esse item no histórico de itens visitados
     busque todos os nós adjacentes desse item:
         se esse nó adjacente não foi visitado:
             marque o nó como visitado
-            adicione esse nó na pilha
+            adicione esse nó no final da pilha
 
 retorne o histórico de itens visitados
 ```
@@ -34,11 +35,23 @@ retorne o histórico de itens visitados
 ## Busca em largura
 
 ### Explicação da forma de funcionamento
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pretium dui turpis, ut dapibus augue pellentesque quis. Aenean sit amet nisi rutrum, varius diam pretium, pharetra magna. Nam non condimentum massa. Ut posuere, metus vitae ultricies luctus, augue lacus ultrices ipsum, sed mollis mauris mauris non sapien.
+Dado um vértice inicial, o algoritmo busca os vértices adjacentes e cada vizinho, e caso ainda não tenha sido visitado, é colocado no final de uma fila e marcado como visitado. Após isso, a mesma coisa acontece para o primeiro item da fila e assim por diante. O processo se repete até que todos os vértices sejam visitados, consequentemente deixando a fila vazia. 
 
 ### Pseudocódigo
 ```
-paste your pseudocodigo here
+escolha um nó inicial
+adicione o nó inicial no histórico de itens visitados
+adicione o nó inicial na fila
+
+enquanto houver item na fila:
+    pegue o primeiro item da fila
+    adicione esse item no histórico de itens visitados
+    busque todos os nós adjacentes desse item:
+        se esse nó adjacente não foi visitado:
+            marque o nó como visitado
+            adicione esse nó no final da fila
+
+retorne o histórico de itens visitados
 ```
 
 ### Trecho do código implementado
@@ -47,11 +60,30 @@ paste your pseudocodigo here
 ## Algoritmo de dijkstra
 
 ### Explicação da forma de funcionamento
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pretium dui turpis, ut dapibus augue pellentesque quis. Aenean sit amet nisi rutrum, varius diam pretium, pharetra magna. Nam non condimentum massa. Ut posuere, metus vitae ultricies luctus, augue lacus ultrices ipsum, sed mollis mauris mauris non sapien.
+O algoritmo usa uma estrutura Hash map (chave-valor) para armazenar o vértice (chave) e a distância até ele (valor) em relação a um dado vértice inicial. Inicialmente esse Hash map começa com todas as distâncias no máximo (ou algo que indique que essa distância não foi calculada ainda). O algoritmo, parecido com o de busca em largura, usa uma pilha para controlar os vértices que ainda precisam ser visitado, enquanto essa pilha não estiver vazia, o vértice atual é marcado como visitado, e para cada aresta conectada a esse vértice, é calculada a distância do vértice atual mais o peso da aresta, se ela for menor que a distância armazenada no Hash map, insere ou subistitui o antigo valor com essa nova distância, após isso, o vértice da atual aresta é adicionado na pilha para a próxima iteração, isso se repete até todos os vértices terem sido visitados e a pilha ficar vazia.
 
 ### Pseudocódigo
-```rs
-paste your pseudocodigo here
+```
+vértice inicial V
+
+distancias[V] = -1
+pilha = [(V, -1)]
+visitados = []
+
+para cada V e distancia D enquanto a pilha não estiver vazia:
+    se visitados contém V:
+        próxima iteração
+    se não:
+        adiciona V nos visitados
+
+    para cada aresta A conectada em V:
+        nova_distancia  = D + peso de A
+        se nova_distancia for menor que distancias[V]:
+            distancias[V] = nova_distancia
+            adicione o vizinho dessa aresta na pilha
+
+retorne distancias            
+
 ```
 
 ### Trecho do código implementado
